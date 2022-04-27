@@ -12,8 +12,14 @@ public class UserServiceImpl implements UserServiceInter {
 
     @Override
     public User findUserByUsernameAndPassword(String username, String password) throws Exception {
-//        String encryptedPassword = encrypter.encode(password);
         User user = userRepository.findByUsernameAndPassword(username, password);
+        if (user == null) throw new IllegalArgumentException("User doesn't exist!!!");
+        return user;
+    }
+
+    @Override
+    public User findUserById(Integer id) throws Exception {
+        User user = userRepository.findById(id);
         System.out.println(user);
         if (user == null) throw new IllegalArgumentException("User doesn't exist!!!");
         return user;

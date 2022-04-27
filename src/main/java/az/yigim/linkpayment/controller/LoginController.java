@@ -17,7 +17,6 @@ import java.io.IOException;
 public class LoginController extends HttpServlet {
 
     private final UserServiceInter userService = BeanContext.userServiceImpl();
-    private final EncrypterInter encrypter = BeanContext.encrypterImpl();
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -28,14 +27,14 @@ public class LoginController extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         try {
-            String email = request.getParameter("email");
+            String username = request.getParameter("username");
             String password = request.getParameter("password");
-            User user = userService.findUserByUsernameAndPassword(email, password);
+            User user = userService.findUserByUsernameAndPassword(username, password);
             request.getSession().setAttribute("loggedInUser", user);
-//            response.sendRedirect("users");
             System.out.println(user);
         } catch (Exception e) {
             System.out.println("Some problem occurred");
         }
+        response.sendRedirect("login.jsp");
     }
 }

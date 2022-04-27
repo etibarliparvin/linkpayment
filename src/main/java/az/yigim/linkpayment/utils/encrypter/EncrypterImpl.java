@@ -1,14 +1,20 @@
 package az.yigim.linkpayment.utils.encrypter;
 
+import org.mindrot.jbcrypt.BCrypt;
+
 import javax.xml.bind.DatatypeConverter;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
-public class EncrypterImpl implements EncrypterInter{
+public class EncrypterImpl implements EncrypterInter {
+
+//    @Override
+//    public String encode(String s) {
+//        return BCrypt.hashpw(s, BCrypt.gensalt(s.length()));
+//    }
 
     @Override
-    public String encode(String s) throws NoSuchAlgorithmException {
-        byte[] digest = MessageDigest.getInstance("MD5").digest(s.getBytes());
-        return DatatypeConverter.printHexBinary(digest).toUpperCase();
+    public Boolean check(String password, String oldPassword) {
+        return BCrypt.checkpw(password, oldPassword);
     }
 }
