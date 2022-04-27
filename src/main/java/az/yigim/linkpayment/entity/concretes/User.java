@@ -7,14 +7,16 @@ public class User implements Entity {
     private Integer id;
     private String username;
     private String password;
+    private String salt;
 
     public User() {
     }
 
-    public User(Integer id, String username, String password) {
+    public User(Integer id, String username, String password, String salt) {
         this.id = id;
         this.username = username;
         this.password = password;
+        this.salt = salt;
     }
 
     public Integer getId() {
@@ -41,8 +43,16 @@ public class User implements Entity {
         this.password = password;
     }
 
+    public String getSalt() {
+        return salt;
+    }
+
+    public void setSalt(String salt) {
+        this.salt = salt;
+    }
+
     @Override
     public String toString() {
-        return "User{" + "id=" + id + ", username=" + username + ", password=" + password + '}';
+        return String.format("User{id=%d, username='%s', password='%s', salt='%s'}", id, username, password, salt);
     }
 }

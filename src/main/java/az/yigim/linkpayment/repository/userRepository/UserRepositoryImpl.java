@@ -1,9 +1,10 @@
 package az.yigim.linkpayment.repository.userRepository;
 
 import az.yigim.linkpayment.entity.concretes.User;
+import az.yigim.linkpayment.utils.encrypter.MyEncrypterImpl;
 import az.yigim.linkpayment.utils.context.BeanContext;
 import az.yigim.linkpayment.utils.dbConnection.DbConnectionInter;
-import az.yigim.linkpayment.utils.encrypter.EncrypterInter;
+import az.yigim.linkpayment.utils.encrypter.MyEncrypterInter;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -12,12 +13,18 @@ import java.sql.ResultSet;
 public class UserRepositoryImpl implements UserRepositoryInter {
 
     private final DbConnectionInter connection = BeanContext.dbConnectionImpl();
-    private final EncrypterInter encrypter = BeanContext.encrypterImpl();
+    private final MyEncrypterInter encrypter = BeanContext.encrypterImpl();
 
     @Override
     public User findByUsernameAndPassword(String username, String password) throws Exception {
         User user = findByUsername(username);
-        if (encrypter.check(password, user.getPassword())) return user;
+        if (user != null) {
+            String salt = user.getSalt();
+            byte[] bytes = encrypter.decode(salt);
+            String encryptedUserPassword = encrypter.encode(encrypter.generateHash(password, bytes));
+            if (encryptedUserPassword.equals(user.getPassword()))
+                return user;
+        }
         return null;
     }
 
@@ -34,7 +41,8 @@ public class UserRepositoryImpl implements UserRepositoryInter {
             Integer id = rs.getInt("id");
             String foundUsername = rs.getString("username");
             String foundPassword = rs.getString("password");
-            user = new User(id, foundUsername, foundPassword);
+            String foundSalt = rs.getString("salt");
+            user = new User(id, foundUsername, foundPassword, foundSalt);
         }
         return user;
     }

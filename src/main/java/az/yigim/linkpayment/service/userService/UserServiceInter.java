@@ -5,6 +5,4 @@ import az.yigim.linkpayment.entity.concretes.User;
 public interface UserServiceInter {
 
     User findUserByUsernameAndPassword(String username, String password) throws Exception;
-
-    User findUserById(Integer id) throws Exception;
 }

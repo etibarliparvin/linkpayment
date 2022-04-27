@@ -3,9 +3,7 @@ package az.yigim.linkpayment.controller;
 import az.yigim.linkpayment.entity.concretes.User;
 import az.yigim.linkpayment.service.userService.UserServiceInter;
 import az.yigim.linkpayment.utils.context.BeanContext;
-import az.yigim.linkpayment.utils.encrypter.EncrypterInter;
 
-import javax.enterprise.inject.spi.Bean;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;

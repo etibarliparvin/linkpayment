@@ -6,8 +6,8 @@ import az.yigim.linkpayment.service.userService.UserServiceImpl;
 import az.yigim.linkpayment.service.userService.UserServiceInter;
 import az.yigim.linkpayment.utils.dbConnection.DbConnectionImpl;
 import az.yigim.linkpayment.utils.dbConnection.DbConnectionInter;
-import az.yigim.linkpayment.utils.encrypter.EncrypterImpl;
-import az.yigim.linkpayment.utils.encrypter.EncrypterInter;
+import az.yigim.linkpayment.utils.encrypter.MyEncrypterImpl;
+import az.yigim.linkpayment.utils.encrypter.MyEncrypterInter;
 
 public class BeanContext {
 
@@ -23,7 +23,7 @@ public class BeanContext {
         return new UserServiceImpl();
     }
 
-    public static EncrypterInter encrypterImpl() {
-        return new EncrypterImpl();
+    public static MyEncrypterInter encrypterImpl() {
+        return new MyEncrypterImpl();
     }
 }
